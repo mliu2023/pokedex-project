@@ -70,6 +70,60 @@ app.delete("/emails/:emailID", async (req, res) => {
   }
 });
 
+app.get("/pokemon", async (req, res) => {
+  const collection = db.collection("pokemon");
+  const result = await collection.find({}).toArray();
+  return res.json(result);
+});
+
+app.post("/pokemon", async (req, res) => {
+  const collection = db.collection("pokemon");
+  const newPokemon = {
+    name: req.body.name,
+    image: req.body.image,
+    stats: req.body.stats,
+  };
+  try {
+    await collection.insertOne(newPokemon);
+    return res.json(newPokemon);
+  } catch (e) {
+    return res.status(500).send();
+  }
+});
+
+app.get("/pokemon/:pokemonID", async (req, res) => {
+  const pokemonID = req.params.pokemonID;
+  const collection = db.collection("pokemon");
+  try {
+    const result = await collection.findOne({ "_id": new ObjectId(pokemonID) });
+    return res.json(result);
+  } catch (e) {
+    return res.status(404).send(`no pokemon found with id ${pokemonID}`);
+  }
+});
+
+app.patch("/pokemon/:pokemonID", async (req, res) => {
+  const pokemonID = req.params.pokemonID;
+  const data = req.body;
+  const collection = db.collection("pokemon");
+  try {
+    const result = await collection.updateOne({ "_id": new ObjectId(pokemonID) }, { $set: data });
+    return res.json(result);
+  } catch (e) {
+    return res.status(404).send(`no email found with id ${pokemonID}`);
+  }
+});
+
+app.delete("/pokemon/:pokemonID", async (req, res) => {
+  const pokemonID = req.params.pokemonID;
+  const collection = db.collection("pokemon");
+  try {
+    const result = await collection.deleteOne({ "_id": new ObjectId(pokemonID) });
+    return res.json(result);
+  } catch (e) {
+    return res.status(404).send(`no pokemon found with id ${pokemonID}`);
+  }
+});
 
 // ... add more endpoints here!
 

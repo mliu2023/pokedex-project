@@ -15,17 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongodb_1 = require("mongodb");
 const body_parser_1 = __importDefault(require("body-parser"));
+const cors_1 = __importDefault(require("cors"));
 require("dotenv").config(".env");
 const app = (0, express_1.default)();
 const port = 8080; // Default port to listen on.
 let db;
 // Middleware.
 app.use(express_1.default.json());
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//   })
-// );
+app.use((0, cors_1.default)({
+    origin: "http://localhost:3000",
+}));
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // Route definitions
 app.get("/emails", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -76,6 +75,60 @@ app.delete("/emails/:emailID", (req, res) => __awaiter(void 0, void 0, void 0, f
     }
     catch (e) {
         return res.status(404).send(`no email found with id ${emailID}`);
+    }
+}));
+app.get("/pokemon", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const collection = db.collection("pokemon");
+    const result = yield collection.find({}).toArray();
+    return res.json(result);
+}));
+app.post("/pokemon", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const collection = db.collection("pokemon");
+    const newPokemon = {
+        name: req.body.name,
+        image: req.body.image,
+        stats: req.body.stats,
+    };
+    try {
+        yield collection.insertOne(newPokemon);
+        return res.json(newPokemon);
+    }
+    catch (e) {
+        return res.status(500).send();
+    }
+}));
+app.get("/pokemon/:pokemonID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const pokemonID = req.params.pokemonID;
+    const collection = db.collection("pokemon");
+    try {
+        const result = yield collection.findOne({ "_id": new mongodb_1.ObjectId(pokemonID) });
+        return res.json(result);
+    }
+    catch (e) {
+        return res.status(404).send(`no pokemon found with id ${pokemonID}`);
+    }
+}));
+app.patch("/pokemon/:pokemonID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const pokemonID = req.params.pokemonID;
+    const data = req.body;
+    const collection = db.collection("pokemon");
+    try {
+        const result = yield collection.updateOne({ "_id": new mongodb_1.ObjectId(pokemonID) }, { $set: data });
+        return res.json(result);
+    }
+    catch (e) {
+        return res.status(404).send(`no email found with id ${pokemonID}`);
+    }
+}));
+app.delete("/pokemon/:pokemonID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const pokemonID = req.params.pokemonID;
+    const collection = db.collection("pokemon");
+    try {
+        const result = yield collection.deleteOne({ "_id": new mongodb_1.ObjectId(pokemonID) });
+        return res.json(result);
+    }
+    catch (e) {
+        return res.status(404).send(`no pokemon found with id ${pokemonID}`);
     }
 }));
 // ... add more endpoints here!

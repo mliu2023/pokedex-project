@@ -13,11 +13,11 @@ export default function Home() {
     axios.get("http://localhost:8080/pokemon")
       .then(res => {
         console.log(res.data);
-        setPokemon(res.data.map(pokemon =>
+        setPokemon(res.data.map((pokemon: any, index: number) =>
           <PokemonCard
-            key={pokemon.name}
+            key={index}
             name={pokemon.name}
-            image={pokemon.sprites.front_default}
+            image={pokemon.image}
             stats={pokemon.stats} />));
       })
       .catch(error => {
