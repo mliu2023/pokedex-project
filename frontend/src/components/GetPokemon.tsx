@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Input, HStack } from "@chakra-ui/react";
 import axios from "axios";
 
-const GetPokemon = () => {
+interface Props {
+    loadPokemon: Function;
+}
+const GetPokemon = ({ loadPokemon }: Props) => {
     const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        loadPokemon();
+    }, [isLoading])
 
     function handleSubmit(e: any) {
         // Block the default form handler behavior.
@@ -11,11 +17,11 @@ const GetPokemon = () => {
 
         // Set isLoading to true while we make the API request.
         setIsLoading(true);
-        
-        getPokemon(e.target.name.value)
+
+        getPokemon(e.target.name.value, loadPokemon)
     }
 
-    function getPokemon(name: string) {
+    function getPokemon(name: string, loadPokemon: Function) {
         console.log(name);
         axios.get(`https://pokeapi.co/api/v2/pokemon/${name}/`)
             .then(res => {
@@ -33,7 +39,7 @@ const GetPokemon = () => {
                     .catch((error) => {
                         // handle error
                         console.log(error);
-                    })
+                    });
             })
             .catch(error => {
                 console.log(error)

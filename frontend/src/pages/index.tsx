@@ -19,7 +19,7 @@ export default function Home() {
             id={pokemon._id}
             name={pokemon.name}
             image={pokemon.image}
-            stats={pokemon.stats} />));
+            stats={pokemon.stats}/>));
       })
       .catch(error => {
         console.log(error)
@@ -43,7 +43,7 @@ export default function Home() {
           <Button onClick={() => setEnterEmailDialog(true)}>Mailing List</Button>
         </HStack>
         <VStack width="100%">
-          <GetPokemon />
+          <GetPokemon loadPokemon={loadPokemon}/>
           {pokemon}
         </VStack>
       </Container>
