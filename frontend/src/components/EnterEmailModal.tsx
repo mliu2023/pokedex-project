@@ -16,7 +16,7 @@ interface Props {
   onClose: () => void;
 }
 
-const NewPostModal = ({ isOpen, onClose }: Props) => {
+const EnterEmailModal = ({ isOpen, onClose }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   function handleSubmit(e: any) {
@@ -28,9 +28,8 @@ const NewPostModal = ({ isOpen, onClose }: Props) => {
 
     // TODO: Make a POST request with the form data to the /posts endpoint
     axios
-      .post("http://localhost:8080/posts", {
-        title: e.target.title.value,
-        body: e.target.body.value,
+      .post("http://localhost:8080/emails", {
+        email: e.target.email.value,
       })
       .then(function (response) {
         // handle success
@@ -52,17 +51,16 @@ const NewPostModal = ({ isOpen, onClose }: Props) => {
       <ModalOverlay />
       <form onSubmit={handleSubmit}>
         <ModalContent>
-          <ModalHeader>Create new post</ModalHeader>
+          <ModalHeader>Sign up for emails!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <VStack spacing={2}>
-              <Input required name="title" placeholder="Post title" />
-              <Textarea required name="body" placeholder="Post body" />
+              <Input required name="email" placeholder="Email address" />
             </VStack>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="blue" type="submit" isLoading={isLoading}>
-              Post
+              Submit
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -71,4 +69,4 @@ const NewPostModal = ({ isOpen, onClose }: Props) => {
   );
 };
 
-export default NewPostModal;
+export default EnterEmailModal;

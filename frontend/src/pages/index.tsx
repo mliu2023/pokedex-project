@@ -1,75 +1,43 @@
 import {Button, Container, HStack, Spacer, Text, VStack} from "@chakra-ui/react"
 import { useState, useEffect } from "react";
-import NewPostModal from "@/components/NewPostModal";
-import Post from "@/components/Post";
+import EnterEmailModal from "@/components/EnterEmailModal";
+import Ticket from "@/components/Ticket";
 import axios from "axios";
 
 export default function Home() {
   const [newPostDialog, setNewPostDialog] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [tickets, setTickets] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:8080/posts")
+    axios.get("http://localhost:8080/tickets")
       .then(res => {
         console.log(res.data);
-        setPosts(res.data.map(post =>
-          <Post
-            key={post._id}
-            title={post.title}
-            body={post.body}
-            postedAt={post.createdAt} />));
+        setTickets(res.data.map(ticket =>
+          <Ticket
+            key={ticket._id}
+            price={ticket.price}
+            location={ticket.location}
+            link={ticket.link} />));
+      })
+      .catch(error => {
+        console.log(error)
       });
   }, [])
   return (
     <div>
-      <NewPostModal
+      <EnterEmailModal
         isOpen={newPostDialog}
         onClose={() => setNewPostDialog(false)}
       />
       <Container maxW="container.sm">
         <HStack my={10}>
           <Text fontSize="5xl" fontWeight={800}>
-            Posts
+            Tickets
           </Text>
           <Spacer />
           <Button onClick={() => setNewPostDialog(true)}>New</Button>
         </HStack>
         <VStack width="100%">
-          {posts}
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp!"
-            postedAt={new Date()}
-          />
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp!"
-            postedAt={new Date()}
-          />
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp!"
-            postedAt={new Date()}
-          />
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp!"
-            postedAt={new Date()}
-          />
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp"
-            postedAt={new Date()}
-          />
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp"
-            postedAt={new Date()}
-          />
-          <Post
-            title="Cool Post"
-            body="Welcome to Full Stack @ Brown bootcamp"
-            postedAt={new Date()}
-          />
+          {tickets}
         </VStack>
       </Container>
     </div>
