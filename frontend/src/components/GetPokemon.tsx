@@ -11,28 +11,13 @@ const GetPokemon = () => {
 
         // Set isLoading to true while we make the API request.
         setIsLoading(true);
-
-        // axios
-        //     .post("http://localhost:8080/pokemon", {
-        //         name: e.target.name.value,
-        //         image: e.target.image.value,
-        //         stats: e.target.stats.value,
-        //     })
-        //     .then((response) =>{
-        //         console.log(response)
-        //     })
-        //     .catch((error) => {
-        //         // handle error
-        //         console.log(error);
-        //     })
-        //     .then(() => {
-        //         setIsLoading(false);
-        //     });
-        getPokemon(e.target.name.toString())
+        
+        getPokemon(e.target.name.value)
     }
 
     function getPokemon(name: string) {
-        axios.get(`https://pokeapi.co/api/v2/pokemon/eevee/`)
+        console.log(name);
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${name}/`)
             .then(res => {
                 console.log(res.data);
                 axios

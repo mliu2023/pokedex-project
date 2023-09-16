@@ -1,6 +1,8 @@
-import { Box, Divider, Text, VStack, Image } from "@chakra-ui/react";
+import { Box, Divider, Text, VStack, Image, CloseButton } from "@chakra-ui/react";
+import axios from "axios";
 
 interface Props {
+    id: string;
     name: string;
     image: string;
     stats: Array<Stat>;
@@ -15,9 +17,20 @@ interface Stat {
     };
 }
 
-const PokemonCard = ({ name, image, stats }: Props) => {
+const PokemonCard = ({ id, name, image, stats }: Props) => {
+    function deletePokemon(){
+        console.log(id);
+        axios.delete(`http://localhost:8080/pokemon/${id}`)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
     return (
         <Box width="75%" borderWidth="1px" borderRadius="lg" overflow="hidden">
+            <CloseButton float="right" onClick={deletePokemon}></CloseButton>
             <Box p={10} paddingBottom="0px">
                 <Text fontSize="36px" fontWeight={600} align="center">
                     {name}

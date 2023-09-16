@@ -9,13 +9,14 @@ export default function Home() {
   const [enterEmailDialog, setEnterEmailDialog] = useState(false);
   const [pokemon, setPokemon] = useState([]);
   
-  useEffect(() => {
+  const loadPokemon = () => {
     axios.get("http://localhost:8080/pokemon")
       .then(res => {
         console.log(res.data);
         setPokemon(res.data.map((pokemon: any, index: number) =>
           <PokemonCard
             key={index}
+            id={pokemon._id}
             name={pokemon.name}
             image={pokemon.image}
             stats={pokemon.stats} />));
@@ -23,6 +24,9 @@ export default function Home() {
       .catch(error => {
         console.log(error)
       });
+  }
+  useEffect(() => {
+    loadPokemon()
   }, [])
   return (
     <div>

@@ -110,7 +110,7 @@ app.patch("/pokemon/:pokemonID", async (req, res) => {
     const result = await collection.updateOne({ "_id": new ObjectId(pokemonID) }, { $set: data });
     return res.json(result);
   } catch (e) {
-    return res.status(404).send(`no email found with id ${pokemonID}`);
+    return res.status(404).send(`no pokemon found with id ${pokemonID}`);
   }
 });
 
