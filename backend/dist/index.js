@@ -15,16 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongodb_1 = require("mongodb");
 const body_parser_1 = __importDefault(require("body-parser"));
-const cors_1 = __importDefault(require("cors"));
 require("dotenv").config(".env");
 const app = (0, express_1.default)();
 const port = 8080; // Default port to listen on.
 let db;
 // Middleware.
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: "http://localhost:3000",
-}));
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000",
+//   })
+// );
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // Route definitions
 app.get("/emails", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
