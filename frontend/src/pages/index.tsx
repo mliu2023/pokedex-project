@@ -8,7 +8,7 @@ import axios from "axios";
 export default function Home() {
   const [enterEmailDialog, setEnterEmailDialog] = useState(false);
   const [pokemon, setPokemon] = useState([]);
-  
+
   const loadPokemon = () => {
     axios.get("http://localhost:8080/pokemon")
       .then(res => {
@@ -19,7 +19,8 @@ export default function Home() {
             id={pokemon._id}
             name={pokemon.name}
             image={pokemon.image}
-            stats={pokemon.stats}/>));
+            stats={pokemon.stats}
+            loadPokemon={loadPokemon}/>));
       })
       .catch(error => {
         console.log(error)

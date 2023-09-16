@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Box, Divider, Text, VStack, Image, CloseButton } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -6,6 +7,7 @@ interface Props {
     name: string;
     image: string;
     stats: Array<Stat>;
+    loadPokemon: Function;
 }
 
 interface Stat {
@@ -17,9 +19,15 @@ interface Stat {
     };
 }
 
-const PokemonCard = ({ id, name, image, stats }: Props) => {
+const PokemonCard = ({ id, name, image, stats, loadPokemon }: Props) => {
+    const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        loadPokemon();
+    }, [isLoading])
+
     function deletePokemon(){
         console.log(id);
+        setIsLoading(true);
         axios.delete(`http://localhost:8080/pokemon/${id}`)
         .then((response) => {
             console.log(response);
@@ -27,6 +35,9 @@ const PokemonCard = ({ id, name, image, stats }: Props) => {
         .catch((error) => {
             console.log(error);
         })
+        .then(() => {
+            setIsLoading(false);
+        });
     }
     return (
         <Box width="75%" borderWidth="1px" borderRadius="lg" overflow="hidden">
