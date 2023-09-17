@@ -72,7 +72,7 @@ const PokemonCard = ({ id, name, image, stats, types, loadPokemon }: Props) => {
     ]);
 
     return (
-        <Box width="100%" borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <Box width="100%" borderWidth="2px" borderRadius="lg" overflow="hidden">
             <CloseButton float="right" onClick={deletePokemon}></CloseButton>
             <Box p={10} paddingBottom="0px">
                 <Text lineHeight="8px" fontSize="28px" fontWeight={600} align="center">

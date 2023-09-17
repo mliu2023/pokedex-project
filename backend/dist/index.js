@@ -27,56 +27,6 @@ app.use((0, cors_1.default)({
 }));
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 // Route definitions
-app.get("/emails", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const collection = db.collection("emails");
-    const result = yield collection.find({}).toArray();
-    return res.json(result);
-}));
-app.post("/emails", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const collection = db.collection("emails");
-    const newEmail = { email: req.body.email };
-    try {
-        yield collection.insertOne(newEmail);
-        return res.json(newEmail);
-    }
-    catch (e) {
-        return res.status(500).send();
-    }
-}));
-app.get("/emails/:emailID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const emailID = req.params.emailID;
-    const collection = db.collection("emails");
-    try {
-        const result = yield collection.findOne({ "_id": new mongodb_1.ObjectId(emailID) });
-        return res.json(result);
-    }
-    catch (e) {
-        return res.status(404).send(`no email found with id ${emailID}`);
-    }
-}));
-app.patch("/emails/:emailID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const emailID = req.params.emailID;
-    const data = req.body;
-    const collection = db.collection("emails");
-    try {
-        const result = yield collection.updateOne({ "_id": new mongodb_1.ObjectId(emailID) }, { $set: data });
-        return res.json(result);
-    }
-    catch (e) {
-        return res.status(404).send(`no email found with id ${emailID}`);
-    }
-}));
-app.delete("/emails/:emailID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const emailID = req.params.emailID;
-    const collection = db.collection("emails");
-    try {
-        const result = yield collection.deleteOne({ "_id": new mongodb_1.ObjectId(emailID) });
-        return res.json(result);
-    }
-    catch (e) {
-        return res.status(404).send(`no email found with id ${emailID}`);
-    }
-}));
 app.get("/pokemon", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const collection = db.collection("pokemon");
     const result = yield collection.find({}).toArray();
