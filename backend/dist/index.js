@@ -88,6 +88,7 @@ app.post("/pokemon", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         name: req.body.name,
         image: req.body.image,
         stats: req.body.stats,
+        types: req.body.types,
     };
     try {
         yield collection.insertOne(newPokemon);
@@ -117,7 +118,7 @@ app.patch("/pokemon/:pokemonID", (req, res) => __awaiter(void 0, void 0, void 0,
         return res.json(result);
     }
     catch (e) {
-        return res.status(404).send(`no email found with id ${pokemonID}`);
+        return res.status(404).send(`no pokemon found with id ${pokemonID}`);
     }
 }));
 app.delete("/pokemon/:pokemonID", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

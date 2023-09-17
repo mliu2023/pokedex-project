@@ -18,10 +18,10 @@ const GetPokemon = ({ loadPokemon }: Props) => {
         // Set isLoading to true while we make the API request.
         setIsLoading(true);
 
-        getPokemon(e.target.name.value, loadPokemon)
+        getPokemon(e.target.name.value)
     }
 
-    function getPokemon(name: string, loadPokemon: Function) {
+    function getPokemon(name: string) {
         console.log(name);
         axios.get(`https://pokeapi.co/api/v2/pokemon/${name}/`)
             .then(res => {
@@ -31,6 +31,7 @@ const GetPokemon = ({ loadPokemon }: Props) => {
                         name: res.data.name,
                         image: res.data.sprites.front_default,
                         stats: res.data.stats,
+                        types: res.data.types,
                     })
                     .then((response) => {
                         // handle success

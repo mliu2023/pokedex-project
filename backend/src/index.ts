@@ -82,6 +82,7 @@ app.post("/pokemon", async (req, res) => {
     name: req.body.name,
     image: req.body.image,
     stats: req.body.stats,
+    types: req.body.types,
   };
   try {
     await collection.insertOne(newPokemon);

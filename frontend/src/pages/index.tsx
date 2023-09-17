@@ -20,6 +20,7 @@ export default function Home() {
             name={pokemon.name}
             image={pokemon.image}
             stats={pokemon.stats}
+            types={pokemon.types}
             loadPokemon={loadPokemon}/>));
       })
       .catch(error => {
