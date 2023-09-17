@@ -1,4 +1,4 @@
-import {Button, Container, HStack, Spacer, Text, VStack} from "@chakra-ui/react"
+import { Button, Container, HStack, Spacer, Text, VStack, SimpleGrid } from "@chakra-ui/react"
 import { useState, useEffect } from "react";
 import EnterEmailModal from "@/components/EnterEmailModal";
 import PokemonCard from "@/components/PokemonCard";
@@ -36,18 +36,18 @@ export default function Home() {
         isOpen={enterEmailDialog}
         onClose={() => setEnterEmailDialog(false)}
       />
-      <Container maxW="container.sm">
+      <Container maxW="container.lg">
         <HStack my={10}>
           <Text fontSize="5xl" fontWeight={800}>
-            Pokemon
+            Pokédex
           </Text>
           <Spacer />
           <Button onClick={() => setEnterEmailDialog(true)}>Mailing List</Button>
         </HStack>
-        <VStack width="100%">
-          <GetPokemon loadPokemon={loadPokemon}/>
+        <GetPokemon loadPokemon={loadPokemon} />
+        <SimpleGrid paddingTop="8px" columns={3} spacing={3} width="100%">
           {pokemon}
-        </VStack>
+        </SimpleGrid>
       </Container>
     </div>
   );

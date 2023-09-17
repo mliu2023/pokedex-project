@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button, Input, HStack } from "@chakra-ui/react";
+import { SearchIcon } from '@chakra-ui/icons'
 import axios from "axios";
 
 interface Props {
@@ -55,7 +56,7 @@ const GetPokemon = ({ loadPokemon }: Props) => {
         <HStack>
             <Input required name="name" placeholder="pokemon name" />
             <Button colorScheme="teal" type="submit" isLoading={isLoading}>
-                Submit
+                <SearchIcon />
             </Button>
         </HStack>
     </form>

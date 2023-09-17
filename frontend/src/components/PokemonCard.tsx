@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Divider, Text, VStack, HStack, Image, CloseButton } from "@chakra-ui/react";
+import { Box, Divider, Text, VStack, HStack, Image, CloseButton, Center } from "@chakra-ui/react";
 import axios from "axios";
 
 interface Props {
@@ -72,20 +72,22 @@ const PokemonCard = ({ id, name, image, stats, types, loadPokemon }: Props) => {
     ]);
 
     return (
-        <Box width="50%" borderWidth="1px" borderRadius="lg" overflow="hidden">
+        <Box width="100%" borderWidth="1px" borderRadius="lg" overflow="hidden">
             <CloseButton float="right" onClick={deletePokemon}></CloseButton>
-            <Box p={8} paddingBottom="0px">
+            <Box p={10} paddingBottom="0px">
                 <Text lineHeight="8px" fontSize="28px" fontWeight={600} align="center">
                     {name}
                 </Text>
                 <Image src={image} boxSize="80%" align="center" display="block" margin="auto" />
             </Box>
-            <HStack>
-            {types.map((type) => 
-                <Box key={type.type.name} p={1} borderRadius="md" backgroundColor={colorMap.get(type.type.name)}>
-                    <Text fontSize="12px">{type.type.name}</Text>
-                </Box>)}
-            </HStack>
+            <Center>
+                <HStack paddingBottom="4px">
+                {types.map((type) => 
+                    <Box key={type.type.name} p={1} borderRadius="md" backgroundColor={colorMap.get(type.type.name)}>
+                        <Text fontSize="12px">{type.type.name}</Text>
+                    </Box>)}
+                </HStack>
+            </Center>
             <Divider />
             <Box p={2}>
                 <VStack>
